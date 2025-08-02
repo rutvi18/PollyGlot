@@ -51,9 +51,10 @@ export default function PolyglotTranslator() {
       const data = await response.json();
       setTranslatedText(data.translatedText);
 
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Frontend error:', err);
-      setError(err.message || 'An unexpected error occurred during translation.');
+      const errorMessage = err instanceof Error ? err.message : 'An unexpected error occurred during translation.';
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
